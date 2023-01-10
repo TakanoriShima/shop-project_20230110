@@ -1,17 +1,19 @@
 <script setup>
 import { reactive } from "vue";
-import { getDatabase, push, ref } from "firebase/database";
+import { getDatabase, onValue, ref } from "firebase/database";
+import { getAuth, signOut } from "firebase/auth";
+import { useRouter } from "vue-router"
 
-const auth = getAuth();
 const router = useRouter();
 const db = getDatabase();
+const auth = getAuth();
 
 const data = reactive({
   messages: [],
 });
 
 onValue(ref(db, "message"), (snapshot) => {
-  data.massages = [];
+  data.messages = [];
   // console.log(snapshot);
   for (const key in snapshot.val()) {
     let message = snapshot.val()[key];
@@ -21,7 +23,7 @@ onValue(ref(db, "message"), (snapshot) => {
 
 const logout = () => {
   signOut(auth);
-  router.push("/");
+  router.push("/admin/login");
 };
 </script>
 
@@ -29,7 +31,7 @@ const logout = () => {
   <header>
     <h1 class="admin-heading">管理画面</h1>
     <div class="logout">
-      <a href="login.index.html">ログアウト</a>
+      <button class="btn btn-outline-primary" @click="logout">logout</button>
     </div>
   </header>
   <main>

@@ -1,4 +1,5 @@
 import * as vueRouter from "vue-router";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Top from "../components/pages/Top.vue";
 import Menu from "../components/pages/Menu.vue";
 import Recruit from "../components/pages/Recruit.vue";
@@ -27,10 +28,30 @@ const routes = [
   {
     path: "/admin/top",
     component: AdminTop,
+    beforeEnter: (to, from, next) => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          next();
+        } else {
+          next('/admin/login');
+        }
+      });
+    }
   },
   {
     path: "/admin/recruit",
     component: AdminRecruit,
+    beforeEnter: (to, from, next) => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          next();
+        } else {
+          next('/admin/login');
+        }
+      });
+    }
   },
 ];
 

@@ -24,7 +24,7 @@ const login = () => {
 </script>
 
 <template>
-  <h1>Login Example</h1>
+  <h1>Shopログイン</h1>
 
   <div class="container">
     <div class="input-area">
