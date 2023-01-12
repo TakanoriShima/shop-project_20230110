@@ -6,6 +6,7 @@ import Recruit from "../components/pages/Recruit.vue";
 import AdminLogin from "../components/pages/Admin/Login.vue";
 import AdminTop from "../components/pages/Admin/AdminTop.vue";
 import AdminRecruit from "../components/pages/Admin/AdminRecruit.vue";
+import AdminAddHoliday from "../components/pages/Admin/AdminAddHoliday.vue";
 
 
 const routes = [
@@ -42,6 +43,20 @@ const routes = [
   {
     path: "/admin/recruit",
     component: AdminRecruit,
+    beforeEnter: (to, from, next) => {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          next();
+        } else {
+          next('/admin/login');
+        }
+      });
+    }
+  },
+  {
+    path: "/admin/addholiday",
+    component: AdminAddHoliday,
     beforeEnter: (to, from, next) => {
       const auth = getAuth()
       onAuthStateChanged(auth, (user) => {

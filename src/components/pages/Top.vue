@@ -1,4 +1,61 @@
-<script setup></script>
+<script setup>
+import {ref, reactive, onMounted } from 'vue';
+import { getDatabase, onValue, ref as dRef } from "firebase/database";
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import jaLocale from "@fullcalendar/core/locales/ja"; // 日本語化用
+import interactionPlugin from '@fullcalendar/interaction';
+
+const db = getDatabase();
+const calendarOptions = ref()
+
+const data = reactive({
+  events: [],
+});
+
+const setCalendar = () => {
+  calendarOptions.value = {
+    plugins: [
+      dayGridPlugin,
+      interactionPlugin // needed for dateClick
+    ],
+    headerToolbar: {
+      left: 'prev,next today',
+      center: 'title',
+      right: ''
+    },
+    showNonCurrentDates: false,
+    dateClick: function(arg){
+      alert('date click! ' + arg.dateStr)
+    },
+    events: data.events,
+    businessHours: true,
+    editable: false,
+    selectable: false,
+    selectMirror: false,
+    dayMaxEvents: true,
+    weekends: true,
+    locale: jaLocale,
+
+  };
+}
+
+onValue(dRef(db, "events"), (snapshot) => {
+  
+  data.events = [];
+  
+  for (const key in snapshot.val()) {
+    let event = snapshot.val()[key];
+    console.log(event);
+    data.events.push(event);
+  }
+  
+  setCalendar();
+});
+
+setCalendar();
+
+</script>
 
 <template>
   <header>
@@ -146,7 +203,9 @@
           </div>
         </div>
       </div>
+      
     </section>
+    
     <hr class="cp_hr02" />
     <section id="calendar">
       <h2 class="calendar-heading">Calendar</h2>
@@ -223,19 +282,26 @@
           <div>000-0000</div>
         </div>
       </div>
+      
     </section>
   </main>
-
   <footer>
     <p class="footer-text">copyright Patisserie</p>
   </footer>
+  <div class="container"> 
+    <div class="row">
+      <div class="col-sm-12">
+        <FullCalendar :options="calendarOptions" />
+      </div>
+    </div>
+  </div>
 </template>
 <style scoped>
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  color: whitesmoke;
+  /* color: whitesmoke; */
 }
 
 a {
@@ -619,4 +685,7 @@ footer {
 .footer-text {
   padding-top: 50px;
 }
+
+/* FullCalendar */
+
 </style>

@@ -25,6 +25,9 @@ const logout = () => {
         <a href="news-mg.index.html">お知らせ管理</a>
       </li>
       <li class="mg-list">
+        <a href="/admin/addholiday">イベント追加</a>
+      </li>
+      <li class="mg-list">
         <a href="blog-mg.index.html">ブログ管理</a>
       </li>
       <li class="mg-list">

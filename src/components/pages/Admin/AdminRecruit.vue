@@ -43,6 +43,7 @@ const logout = () => {
             <th>名前</th>
             <th>ふりがな</th>
             <th>年齢</th>
+            <th>性別</th>
             <th>電話番号</th>
             <th>志望理由</th>
           </tr>
@@ -52,6 +53,7 @@ const logout = () => {
             <td>{{ message.name }}</td>
             <td>{{ message.furigana }}</td>
             <td>{{ message.age }}</td>
+            <td>{{ message.gender }}</td>
             <td>{{ message.tel }}</td>
             <td>{{ message.reason }}</td>
           </tr>

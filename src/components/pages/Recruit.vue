@@ -6,6 +6,7 @@ const data = reactive({
   input_name: "",
   input_furigana: "",
   input_age: "",
+  input_gender: "",
   input_tel: "",
   input_reason: "",
   message: [],
@@ -15,10 +16,12 @@ const sendMessage = () => {
   console.log("ok");
   const db = getDatabase();
   const dbRef = ref(db, "message");
+  console.log(data.input_gender);
   push(dbRef, {
     name: data.input_name,
     furigana: data.input_furigana,
     age: data.input_age,
+    gender: data.input_gender,
     tel: data.input_tel,
     reason: data.input_reason,
   });
@@ -142,9 +145,9 @@ const refMessage = ref(getDatabase(), "message");
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="gridRadios"
+                    v-model="data.input_gender"
                     id="gridRadios1"
-                    value="option1"
+                    value="男性"
                     checked
                   />
                   <label class="form-check-label text-dark" for="gridRadios1">
@@ -155,9 +158,9 @@ const refMessage = ref(getDatabase(), "message");
                   <input
                     class="form-check-input"
                     type="radio"
-                    name="gridRadios"
+                    v-model="data.input_gender"
                     id="gridRadios2"
-                    value="option2"
+                    value="女性"
                   />
                   <label class="form-check-label text-dark" for="gridRadios2">
                     女性

@@ -1,0 +1,41 @@
+https://byceclorets.com/vue/vue3-fullcalendar-google-calendar/
+https://www.npmjs.com/package/@fullcalendar/vue3
+https://qiita.com/doikatsuyuki/items/344b61459977a7ee2eff
+https://www.mitsue.co.jp/knowledge/blog/frontend/202012/08_0900.html
+https://webstudioleaf.com/blog/js/fullcal-custom/
+
+npm install @fullcalendar/vue3 @fullcalendar/core @fullcalendar/daygrid @fullcalendar/interaction
+
+import {ref} from 'vue';
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+import jaLocale from "@fullcalendar/core/locales/ja"; // 日本語化用
+
+const calendarOptions = ref(null)   
+
+ calendarOptions.value = {
+        plugins: [
+          dayGridPlugin
+        ],
+        headerToolbar: {
+          left: 'prev,next today',
+          center: 'title',
+          right: ''
+        },
+        events: [{
+          title: 'test',
+          start: '2023-01-24',
+          end: '2023-01-26'
+        }],
+        editable: false,
+        selectable: false,
+        selectMirror: false,
+        dayMaxEvents: true,
+        weekends: true,
+        locale: jaLocale
+      }
+</script>
+
+<template>
+<FullCalendar :options="calendarOptions" />
+</template>
